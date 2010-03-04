@@ -13,7 +13,7 @@ class CukeWeb < Sinatra::Base
   def feature_files
     conf = Cucumber::Cli::Configuration.new
     conf.parse!([@path])
-    conf.feature_files
+    conf.feature_files.map { |path| path.gsub(@path + '/', '') }
   end
   
   get '/' do

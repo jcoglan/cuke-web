@@ -5,4 +5,5 @@ Feature: Browser features over the web
   Scenario: See a list of features
     When I visit "/"
     Then I should see "features/web_interface.feature"
+    Then I should not see "/features"
 
