@@ -1,6 +1,6 @@
 <ul>
-<% @feature_files.each do |path| %>
-  <li><%= path %></li>
+<% @feature_files.each_with_index do |path, i| %>
+  <li><a href="/features/<%= i+1 %>"><%= path %></a></li>
 <% end %>
 </ul>
 
