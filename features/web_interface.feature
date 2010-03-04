@@ -2,7 +2,7 @@ Feature: Browser features over the web
   As a Cucumber user
   I want to browse my feature files in my web browser
   
-  Scenario:
+  Scenario: See a list of features
     When I visit "/"
-    Then I should see "Welcome to CukeWeb"
+    Then I should see "features/web_interface.feature"
 
