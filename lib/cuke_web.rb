@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'cucumber'
 
 class CukeWeb < Sinatra::Base
   

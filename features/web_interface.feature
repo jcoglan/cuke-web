@@ -1,4 +1,4 @@
-Feature: Browser features over the web
+Feature: Browse features over the web
   As a Cucumber user
   I want to browse my feature files in my web browser
   

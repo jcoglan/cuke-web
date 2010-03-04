@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'oyster'
+require 'rack'
+require 'thin'
+require File.dirname(__FILE__) + '/../lib/cuke_web'
+
+spec = Oyster.spec do
+  name "cuke-web -- browser Cucumber features using a web browser"
+end
+
+begin
+  options = spec.parse
+rescue Oyster::HelpRendered
+  exit
+end
+
+app = CukeWeb.new(options[:unclaimed].first)
+Rack::Handler.get('thin').run(app, :Port => 8080)
+
