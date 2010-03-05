@@ -1,0 +1,22 @@
+= CukeWeb
+
+* http://github.com/jcoglan/cuke-web
+
+A web frontend for exploring and running Cucumber test suites. Currently just
+a prototype, but can do these:
+
+* List and display features files in a project
+* Turn steps into links to their definition's source code
+* Run scenarios by clicking their titles.
+
+To set up, for now:
+
+  sudo gem install cucumber sinatra rack thin oyster
+  git clone git://github.com/jcoglan/cuke-web.git
+  cd cuke-web
+  ruby bin/cuke-web . -p 3000
+
+Go to <tt>http://localhost:3000</tt> to browse the app's features. A lot of
+the scenarios are self-referential and won't work through the web frontend,
+but the app should probably work for your cukes.
+
