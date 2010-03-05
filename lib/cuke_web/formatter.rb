@@ -30,7 +30,7 @@ class CukeWeb
     end
     
     def format_step_match(step_match)
-      step_match.format_args { |arg| '<span class="str">' + arg + '</span>' }
+      step_match.format_args { |arg| '<span class="str">' + arg.to_s + '</span>' }
     end
     
     def format_step(keyword, step_match, status, source_indent)
@@ -50,8 +50,9 @@ class CukeWeb
     private
     
     def print_feature_element_name(keyword, name, file_colon_line, source_indent)
+      file, line = *file_colon_line.split(':')
       keyword = '<span class="cuke-keyword">' + keyword + '</span>'
-      name = '<span class="cuke-name">' + name + '</span>'
+      name = '<a href="/run' + file + '/' + line + '" class="cuke-name">' + name + '</a>'
       super(keyword, name, file_colon_line, source_indent)
     end
     

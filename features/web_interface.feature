@@ -18,7 +18,7 @@ Feature: Browse features over the web
     """
   
   Scenario: View the source for a step
-    When I visit "/features/1"
+    When I visit "/features/2"
     And I follow "Then I should see "features""
     Then I should see
     """
@@ -26,4 +26,10 @@ Feature: Browse features over the web
       page.should have_content(string)
     end
     """
+  
+  Scenario: Run a scenario from the browser
+    When I visit "/features/1"
+    And I follow "Run a scenario"
+    Then I should see "1 scenario (1 passed)"
+    And I should see "1 step (1 passed)"
 

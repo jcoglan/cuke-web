@@ -8,6 +8,7 @@ class CukeWeb < Sinatra::Base
   set :static, true
   
   require ROOT_DIR + '/cuke_web/formatter'
+  require ROOT_DIR + '/cuke_web/runner'
   
   def initialize(path)
     super()
@@ -39,6 +40,12 @@ class CukeWeb < Sinatra::Base
     @definition_file = File.join(@path, params[:splat].first)
     @lines = File.read(@definition_file).split(/\n/)
     erb :definition_file
+  end
+  
+  get '/run/*' do
+    parts = params[:splat].first.split('/')
+    line = parts.pop
+    Runner.new('/' + File.join(*parts), line).output
   end
   
 end
