@@ -6,15 +6,21 @@ class CukeWeb < Sinatra::Base
   ROOT_DIR = File.expand_path(File.dirname(__FILE__))
   set :root, ROOT_DIR
   
+  require ROOT_DIR + '/cuke_web/formatter'
+  
   def initialize(path)
     super()
     @path = File.expand_path(path)
+    
+    @step_mother = Cucumber::StepMother.new
+    @config = Cucumber::Cli::Configuration.new
+    @config.parse!([@path])
+    
+    @step_mother.load_code_files(@config.step_defs_to_load)
   end
   
   def feature_files
-    conf = Cucumber::Cli::Configuration.new
-    conf.parse!([@path])
-    conf.feature_files
+    @config.feature_files.sort
   end
   
   get '/' do
@@ -24,8 +30,14 @@ class CukeWeb < Sinatra::Base
   
   get '/features/:n' do |n|
     @feature_file = feature_files[n.to_i - 1]
-    @feature_text = File.read(@feature_file)
+    @formatter = Formatter.new(@step_mother, @feature_file)
     erb :feature
+  end
+  
+  get '/steps/*' do
+    @definition_file = File.join(@path, params[:splat].first)
+    @lines = File.read(@definition_file).split(/\n/)
+    erb :definition_file
   end
   
 end

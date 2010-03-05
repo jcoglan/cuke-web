@@ -1,0 +1,7 @@
+<p>Viewing <tt><%= @definition_file %></tt></p>
+
+<pre>
+<% @lines.each_with_index do |line, i| %>
+<a name="L<%= i + 1 %>"></a><%= line %><% end %>
+</pre>
+

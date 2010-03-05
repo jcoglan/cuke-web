@@ -16,4 +16,14 @@ Feature: Browse features over the web
       As a Cucumber user
       I want to browse my feature files in my web browser
     """
+  
+  Scenario: View the source for a step
+    When I visit "/features/1"
+    And I follow "Then I should see "features""
+    Then I should see
+    """
+    Then /^I should see$/ do |string|
+      page.should have_content(string)
+    end
+    """
 
