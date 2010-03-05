@@ -1,0 +1,6 @@
+pre a { color: inherit; text-decoration: none; }
+pre a:hover { background: #ffc; }
+
+.cuke-keyword { color: #458; font-weight: bold; }
+.cuke-name { color: #008080; }
+
