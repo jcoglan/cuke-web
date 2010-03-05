@@ -7,8 +7,7 @@ class CukeWeb
     
     def initialize(file, line)
       command = "cucumber #{file}:#{line} --format html"
-      p command
-      @output = `#{command}`
+      @output = IO.popen(command).read
     end
     
   end
