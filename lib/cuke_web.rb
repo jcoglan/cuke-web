@@ -5,6 +5,7 @@ class CukeWeb < Sinatra::Base
   
   ROOT_DIR = File.expand_path(File.dirname(__FILE__))
   set :root, ROOT_DIR
+  set :static, true
   
   require ROOT_DIR + '/cuke_web/formatter'
   
