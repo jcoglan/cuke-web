@@ -12,7 +12,7 @@ Feature: Browse features over the web
     And I follow "features/web_interface.feature"
     Then I should see
     """
-    Feature: Browser features over the web
+    Feature: Browse features over the web
       As a Cucumber user
       I want to browse my feature files in my web browser
     """
