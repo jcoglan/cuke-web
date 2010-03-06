@@ -19,7 +19,7 @@ Feature: Browse features over the web
   
   Scenario: View the source for a step
     When I visit "/features/2"
-    And I follow "Then I should see "features""
+    And I follow "Then I should see "1 scenario (1 passed)""
     Then I should see
     """
     Then /^I should see$/ do |string|
