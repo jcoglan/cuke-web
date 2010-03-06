@@ -2,6 +2,11 @@ When /^I visit "([^\"]*)"$/ do |path|
   visit path
 end
 
+When /^I view the "([^\"]*)" feature$/ do |feature|
+  When 'I visit "/"'
+  When 'I follow "' + feature + '"'
+end
+
 Then /^I should see "([^\"]*)"$/ do |text|
   page.should have_content(text)
 end

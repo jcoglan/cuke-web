@@ -4,12 +4,13 @@ Feature: Browse features over the web
   
   Scenario: See a list of features
     When I visit "/"
-    Then I should see "features/web_interface.feature"
-    Then I should not see "/features"
+    Then I should see "web_interface"
+    And I should not see "/features"
+    And I should not see ".feature"
   
   Scenario: Read a feature file
     When I visit "/"
-    And I follow "features/web_interface.feature"
+    And I follow "web_interface"
     Then I should see
     """
     Feature: Browse features over the web
@@ -18,7 +19,7 @@ Feature: Browse features over the web
     """
   
   Scenario: View the source for a step
-    When I visit "/features/2"
+    When I view the "web_interface" feature
     And I follow "Then I should see "1 scenario (1 passed)""
     Then I should see
     """
@@ -28,7 +29,7 @@ Feature: Browse features over the web
     """
   
   Scenario: Run a scenario from the browser
-    When I visit "/features/1"
+    When I view the "runnable_scenario" feature
     And I follow "Run a scenario"
     Then I should see "1 scenario (1 passed)"
     And I should see "1 step (1 passed)"

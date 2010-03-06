@@ -26,7 +26,10 @@ class CukeWeb < Sinatra::Base
   end
   
   get '/' do
-    @feature_files = feature_files.map { |path| path.gsub(@path + '/', '') }
+    @feature_files = feature_files.map do |path|
+      path.gsub(@path + '/', '').
+           gsub(/\.feature$/, '')
+    end
     erb :index
   end
   
