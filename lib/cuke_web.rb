@@ -35,7 +35,7 @@ class CukeWeb < Sinatra::Base
   
   get '/features/:n' do |n|
     @feature_file = feature_files[n.to_i - 1]
-    @formatter = Formatter.new(@step_mother, @feature_file)
+    @formatter = Formatter.new(@step_mother, :file => @feature_file)
     erb :feature
   end
   
@@ -43,6 +43,12 @@ class CukeWeb < Sinatra::Base
     @definition_file = File.join(@path, params[:splat].first)
     @lines = File.read(@definition_file).split(/\n/)
     erb :definition_file
+  end
+  
+  get '/tags/:tag' do
+    @tag = params[:tag]
+    @formatter = Formatter.new(@step_mother, :tag => @tag, :files => feature_files)
+    erb :tag
   end
   
   get '/run/*' do

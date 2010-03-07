@@ -2,6 +2,7 @@ Feature: Browse features over the web
   As a Cucumber user
   I want to browse my feature files in my web browser
   
+  @view_source
   Scenario: See a list of features
     When I visit "/"
     Then I should see "web_interface"
@@ -16,6 +17,29 @@ Feature: Browse features over the web
     Feature: Browse features over the web
       As a Cucumber user
       I want to browse my feature files in my web browser
+    """
+  
+  Scenario: View scenarios by tag
+    When I view the "runnable_scenario" feature
+    And I follow "@view_source"
+    Then I should see
+    """
+    Feature: Runnable Scenario
+
+      @view_source
+      Scenario: Run a scenario
+        When I do nothing
+
+    Feature: Browse features over the web
+      As a Cucumber user
+      I want to browse my feature files in my web browser
+
+      @view_source
+      Scenario: See a list of features
+        When I visit "/"
+        Then I should see "web_interface"
+        And I should not see "/features"
+        And I should not see ".feature"
     """
   
   Scenario: View the source for a step

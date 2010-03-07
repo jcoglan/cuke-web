@@ -5,19 +5,34 @@ class CukeWeb
     
     OPTIONS = {:dry_run => true, :source => true}.freeze
     
-    def initialize(step_mother, feature_path)
-      @step_mother = step_mother
-      @feature_file = Cucumber::FeatureFile.new(feature_path)
-      @feature = @feature_file.parse(step_mother, {})
-      super(@step_mother, StringIO.new, OPTIONS)
+    def initialize(step_mother, options)
+      existing_options = step_mother.options
+      
+      @options = OPTIONS.dup
+      @options[:tag_expression] = Cucumber::TagExpression.parse([options[:tag]]) if options[:tag]
+      step_mother.options = @options
+      
+      if file = options[:file]
+        feature_file = Cucumber::FeatureFile.new(file)
+        feature = feature_file.parse(step_mother, @options)
+        @features = Cucumber::Ast::Features.new
+        @features.add_feature(feature)
+        
+      elsif tag = options[:tag]
+        @features = step_mother.load_plain_text_features(options[:files])
+      end
+      
+      step_mother.options = existing_options
+      super(step_mother, StringIO.new, @options)
     end
     
     def render_html
-      walker = Cucumber::Ast::TreeWalker.new(@step_mother, [self], OPTIONS, @io)
-      walker.visit_feature(@feature)
+      walker = Cucumber::Ast::TreeWalker.new(@step_mother, [self], @options, @io)
+      walker.visit_features(@features)
       @io.rewind
       @io.read
     rescue => e
+      puts e
       p e.backtrace
     end
     
@@ -40,7 +55,9 @@ class CukeWeb
     end
     
     def format_string(string, status)
-      status == :comment ? "" : string
+      return "" if status == :comment
+      return '<a href="/tags/' + string + '" class="lit">' + string + '</a>' if status == :tag
+      string
     end
     
     def py_string(string)
@@ -54,6 +71,9 @@ class CukeWeb
       keyword = '<span class="cuke-keyword">' + keyword + '</span>'
       name = '<a href="/run' + file + '/' + line + '" class="cuke-name">' + name + '</a>'
       super(keyword, name, file_colon_line, source_indent)
+    end
+    
+    def print_summary(features)
     end
     
   end
